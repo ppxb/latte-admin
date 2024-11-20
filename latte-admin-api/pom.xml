@@ -1,0 +1,115 @@
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.ppxb</groupId>
+        <artifactId>latte-admin</artifactId>
+        <version>${revision}</version>
+    </parent>
+
+    <artifactId>latte-admin-api</artifactId>
+    <description>API and packaged deployment module</description>
+
+    <properties>
+        <main-class>com.ppxb.latte.admin.api.LatteAdminBootstrap</main-class>
+        <bin-path>bin/</bin-path>
+        <config-path>config/</config-path>
+        <lib-path>lib/</lib-path>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.ppxb</groupId>
+            <artifactId>latte-admin-common</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <!-- Setup project package name -->
+        <finalName>${project.parent.name}</finalName>
+        <plugins>
+            <!-- Maven package plugin -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <configuration>
+                    <!-- Exclude config files -->
+                    <excludes>
+                        <exclude>${config-path}</exclude>
+                        <exclude>db/</exclude>
+                        <exclude>templates/</exclude>
+                        <exclude>logback-spring.xml</exclude>
+                    </excludes>
+                    <archive>
+                        <manifest>
+                            <mainClass>${main-class}</mainClass>
+                            <!-- For MANIFEST.MF Class-Path prefixed with the dependent jar directory -->
+                            <classpathPrefix>../${lib-path}</classpathPrefix>
+                            <addClasspath>true</addClasspath>
+                            <!-- The jar package does not contain a unique version identifier -->
+                            <useUniqueVersions>false</useUniqueVersions>
+                        </manifest>
+                        <manifestEntries>
+                            <!-- For MANIFEST.MF Class-Path prefixed with the dependent jar directory -->
+                            <Class-Path>../${config-path}</Class-Path>
+                        </manifestEntries>
+                    </archive>
+                    <outputDirectory>${project.build.directory}/app/${bin-path}</outputDirectory>
+                </configuration>
+            </plugin>
+            <!-- Copy dependencies lib -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>copy-dependencies</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>copy-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.directory}/app/${lib-path}</outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <!-- Copy config files -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>copy-resources</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <resources>
+                                <resource>
+                                    <directory>src/main/resources/${config-path}</directory>
+                                </resource>
+                                <resource>
+                                    <directory>src/main/resources</directory>
+                                    <includes>
+                                        <include>db/</include>
+                                        <include>templates/</include>
+                                        <include>logback-spring.xml</include>
+                                    </includes>
+                                </resource>
+                            </resources>
+                            <outputDirectory>${project.build.directory}/app/${config-path}</outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>

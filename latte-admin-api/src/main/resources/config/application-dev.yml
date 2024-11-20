@@ -1,0 +1,16 @@
+server:
+  port: 9527
+
+logging:
+  level:
+    com.ppxb.latte.admin: debug
+    com.ppxb.latte.starter: debug
+
+latte-starter:
+  web:
+    cors:
+      enabled: true
+      allowed-origins: "*"
+      allowed-methods: "*"
+      allowed-headers: "*"
+      exposed-headers: "*"
