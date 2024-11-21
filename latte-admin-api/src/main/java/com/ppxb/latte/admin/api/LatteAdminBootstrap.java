@@ -2,18 +2,26 @@ package com.ppxb.latte.admin.api;
 
 import cn.hutool.core.net.NetUtil;
 import cn.hutool.core.util.URLUtil;
+import com.ppxb.latte.starter.core.autoconfigure.project.ProjectProperties;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
 @SpringBootApplication
 @RestController
+@RequiredArgsConstructor
 public class LatteAdminBootstrap implements ApplicationRunner {
+
+    private final ProjectProperties projectProperties;
+
+    private final ServerProperties serverProperties;
 
     public static void main(String[] args) {
         SpringApplication.run(LatteAdminBootstrap.class, args);
@@ -27,11 +35,14 @@ public class LatteAdminBootstrap implements ApplicationRunner {
     @Override
     public void run(ApplicationArguments args) {
         String host = NetUtil.localIpv4s().stream().findFirst().orElse("127.0.0.1");
-        Integer port = 9527;
-        String baseUrl = URLUtil.normalize("%s:%s%s".formatted(host, port, "/"));
+        Integer port = serverProperties.getPort();
+        String contextPath = serverProperties.getServlet().getContextPath();
+        String baseUrl = URLUtil.normalize("%s:%s%s".formatted(host, port, contextPath));
+
         log.info("----------------------------------------------");
-        log.info("{} service started successfully.", "Latte Admin");
-        log.info("API Url: {}", baseUrl);
+        log.info("🚀 Server started successfully.");
+        log.info("{} - {}", projectProperties.getName(), projectProperties.getDescription());
+        log.info("API 地址：{}", baseUrl);
         log.info("----------------------------------------------");
     }
 }

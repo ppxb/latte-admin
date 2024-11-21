@@ -8,7 +8,7 @@
     </parent>
 
     <artifactId>latte-admin-api</artifactId>
-    <description>API and packaged deployment module</description>
+    <description>API 打包和部署模块</description>
 
     <properties>
         <main-class>com.ppxb.latte.admin.api.LatteAdminBootstrap</main-class>
@@ -22,24 +22,18 @@
             <groupId>com.ppxb</groupId>
             <artifactId>latte-admin-common</artifactId>
         </dependency>
-
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-        </dependency>
     </dependencies>
 
     <build>
-        <!-- Setup project package name -->
+        <!-- 设置项目包名 -->
         <finalName>${project.parent.name}</finalName>
         <plugins>
-            <!-- Maven package plugin -->
+            <!-- Maven 打包插件 -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
                 <configuration>
-                    <!-- Exclude config files -->
+                    <!-- 排除设置文件 -->
                     <excludes>
                         <exclude>${config-path}</exclude>
                         <exclude>db/</exclude>
@@ -49,21 +43,21 @@
                     <archive>
                         <manifest>
                             <mainClass>${main-class}</mainClass>
-                            <!-- For MANIFEST.MF Class-Path prefixed with the dependent jar directory -->
+                            <!-- 为 MANIFEST.MF 中的 Class-Path 加入依赖 JAR 目录前缀 -->
                             <classpathPrefix>../${lib-path}</classpathPrefix>
                             <addClasspath>true</addClasspath>
-                            <!-- The jar package does not contain a unique version identifier -->
+                            <!-- JAR 包不包含唯一版本标识 -->
                             <useUniqueVersions>false</useUniqueVersions>
                         </manifest>
                         <manifestEntries>
-                            <!-- For MANIFEST.MF Class-Path prefixed with the dependent jar directory -->
+                            <!-- 为 MANIFEST.MF 中的 Class-Path 加入依赖 JAR 目录前缀 -->
                             <Class-Path>../${config-path}</Class-Path>
                         </manifestEntries>
                     </archive>
                     <outputDirectory>${project.build.directory}/app/${bin-path}</outputDirectory>
                 </configuration>
             </plugin>
-            <!-- Copy dependencies lib -->
+            <!-- 复制依赖 -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
@@ -80,7 +74,7 @@
                     </execution>
                 </executions>
             </plugin>
-            <!-- Copy config files -->
+            <!-- 复制配置文件 -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-resources-plugin</artifactId>

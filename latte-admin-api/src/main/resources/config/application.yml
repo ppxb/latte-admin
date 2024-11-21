@@ -1,8 +1,28 @@
+# 项目配置
+project:
+  name: Latte Admin
+  app-name: latte-admin
+  version: 1.0.0
+  description: 持续迭代优化的前后端分离中后台管理系统框架。
+  base-package: com.ppxb.latte.admin
+
+
 spring:
   application:
-    name: Latte Admin
+    name: ${project.app-name}
   profiles:
     active: dev
+
+server:
+  servlet:
+    context-path: /
+  undertow:
+    max-http-post-size: -1
+    buffer-size: 512
+    direct-buffers: true
+    threads:
+      io: 8
+      worker: 256
 
 logging:
   config: classpath:logback-spring.xml

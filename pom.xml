@@ -13,8 +13,7 @@
     <packaging>pom</packaging>
     <name>Latea Admin</name>
     <description>
-        Latte Admin is a front-end and back-end separation management system framework that is continuously iteratively
-        optimized.
+        Latte Admin 是一个前后端分离的中后台管理项目模板。
     </description>
 
     <modules>
@@ -51,7 +50,7 @@
 
     <build>
         <plugins>
-            <!-- Compiler plugin -->
+            <!-- 编译插件 -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -59,16 +58,16 @@
                     <compilerArgument>-parameters</compilerArgument>
                 </configuration>
             </plugin>
-            <!-- Unit test plugin -->
+            <!-- 单元测试插件 -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <!-- Skip test -->
+                <!-- 跳过测试 -->
                 <configuration>
                     <skip>true</skip>
                 </configuration>
             </plugin>
-            <!-- Code formatted plugin -->
+            <!-- 代码格式化插件 -->
             <plugin>
                 <groupId>com.diffplug.spotless</groupId>
                 <artifactId>spotless-maven-plugin</artifactId>
@@ -92,7 +91,7 @@
                     </java>
                 </configuration>
             </plugin>
-            <!-- Version management plugin -->
+            <!-- Flatten 版本控制插件 -->
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>flatten-maven-plugin</artifactId>
