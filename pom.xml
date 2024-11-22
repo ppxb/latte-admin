@@ -19,6 +19,7 @@
     <modules>
         <module>latte-admin-common</module>
         <module>latte-admin-api</module>
+        <module>latte-admin-system</module>
     </modules>
 
     <properties>

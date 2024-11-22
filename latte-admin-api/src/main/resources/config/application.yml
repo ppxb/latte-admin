@@ -37,3 +37,14 @@ knife4j:
 
 logging:
   config: classpath:logback-spring.xml
+
+latte-starter:
+  web:
+    response:
+      i18n: false
+      default-http-status-code-on-error: 200
+      default-success-code: 0
+      default-success-msg: ok
+      default-error-code: -1
+      default-error-msg: error
+      origin-exception-using-detail-message: false

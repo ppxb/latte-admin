@@ -5,6 +5,9 @@ import cn.hutool.core.util.URLUtil;
 import cn.hutool.extra.spring.SpringUtil;
 import com.github.xiaoymin.knife4j.spring.configuration.Knife4jProperties;
 import com.ppxb.latte.starter.core.autoconfigure.project.ProjectProperties;
+import com.ppxb.latte.starter.web.annotation.EnableGlobalResponse;
+import com.ppxb.latte.starter.web.model.R;
+import io.swagger.v3.oas.annotations.Hidden;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.ApplicationArguments;
@@ -16,6 +19,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
+@EnableGlobalResponse
 @SpringBootApplication
 @RestController
 @RequiredArgsConstructor
@@ -29,9 +33,10 @@ public class LatteAdminBootstrap implements ApplicationRunner {
         SpringApplication.run(LatteAdminBootstrap.class, args);
     }
 
+    @Hidden
     @GetMapping("/")
-    public String hello() {
-        return "hello";
+    public R<?> index() {
+        return R.ok("🚀 %s server started successfully.".formatted(projectProperties.getName()), null);
     }
 
     @Override
