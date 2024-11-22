@@ -15,5 +15,10 @@
             <groupId>com.ppxb</groupId>
             <artifactId>latte-starter-web</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>com.ppxb</groupId>
+            <artifactId>latte-starter-api-doc</artifactId>
+        </dependency>
     </dependencies>
 </project>

@@ -2,6 +2,8 @@ package com.ppxb.latte.admin.api;
 
 import cn.hutool.core.net.NetUtil;
 import cn.hutool.core.util.URLUtil;
+import cn.hutool.extra.spring.SpringUtil;
+import com.github.xiaoymin.knife4j.spring.configuration.Knife4jProperties;
 import com.ppxb.latte.starter.core.autoconfigure.project.ProjectProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -43,6 +45,10 @@ public class LatteAdminBootstrap implements ApplicationRunner {
         log.info("🚀 Server started successfully.");
         log.info("{} - {}", projectProperties.getName(), projectProperties.getDescription());
         log.info("API 地址：{}", baseUrl);
+        Knife4jProperties knife4jProperties = SpringUtil.getBean(Knife4jProperties.class);
+        if (!knife4jProperties.isProduction()) {
+            log.info("API 文档地址：{}/doc.html", baseUrl);
+        }
         log.info("----------------------------------------------");
     }
 }

@@ -5,7 +5,8 @@ project:
   version: 1.0.0
   description: 持续迭代优化的前后端分离中后台管理系统框架。
   base-package: com.ppxb.latte.admin
-
+  contact:
+    name: ppxb
 
 spring:
   application:
@@ -23,6 +24,16 @@ server:
     threads:
       io: 8
       worker: 256
+
+springdoc:
+  default-flat-param-object: true
+
+knife4j:
+  enable: true
+  setting:
+    enable-footer: false
+    enable-footer-custom: true
+    footer-custom-content: 'Copyright © 2024 ${project.contact.name}&nbsp;⋅&nbsp;${project.name} v${project.version}'
 
 logging:
   config: classpath:logback-spring.xml
