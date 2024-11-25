@@ -20,6 +20,11 @@
     <dependencies>
         <dependency>
             <groupId>com.ppxb</groupId>
+            <artifactId>latte-starter-log-interceptor</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.ppxb</groupId>
             <artifactId>latte-admin-common</artifactId>
         </dependency>
     </dependencies>

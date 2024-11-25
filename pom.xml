@@ -11,7 +11,7 @@
     <artifactId>latte-admin</artifactId>
     <version>${revision}</version>
     <packaging>pom</packaging>
-    <name>Latea Admin</name>
+    <name>Latte Admin</name>
     <description>
         Latte Admin 是一个前后端分离的中后台管理项目模板。
     </description>

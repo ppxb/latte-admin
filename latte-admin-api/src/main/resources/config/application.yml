@@ -8,12 +8,14 @@ project:
   contact:
     name: ppxb
 
+# Spring 配置
 spring:
   application:
     name: ${project.app-name}
   profiles:
     active: dev
 
+# 服务器配置
 server:
   servlet:
     context-path: /
@@ -25,9 +27,10 @@ server:
       io: 8
       worker: 256
 
+# 接口文档配置
 springdoc:
   default-flat-param-object: true
-
+# 接口文档增强配置
 knife4j:
   enable: true
   setting:
@@ -35,6 +38,18 @@ knife4j:
     enable-footer-custom: true
     footer-custom-content: 'Copyright © 2024 ${project.contact.name}&nbsp;⋅&nbsp;${project.name} v${project.version}'
 
+# 日志配置
+latte-starter.log:
+  includes:
+    - DESCRIPTION
+    - MODULE
+    - REQUEST_HEADERS
+    - REQUEST_BODY
+    - IP_ADDRESS
+    - BROWSER
+    - OS
+    - RESPONSE_HEADERS
+    - RESPONSE_BODY
 logging:
   config: classpath:logback-spring.xml
 
