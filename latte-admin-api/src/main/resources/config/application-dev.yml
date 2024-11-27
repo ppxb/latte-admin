@@ -1,16 +1,25 @@
 server:
   port: 9527
 
+# 日志配置
+latte-starter.log:
+  is-print: true
 logging:
   level:
     com.ppxb.latte.admin: debug
     com.ppxb.latte.starter: debug
+  file:
+    path: ./logs
 
-latte-starter:
-  web:
-    cors:
-      enabled: true
-      allowed-origins: "*"
-      allowed-methods: "*"
-      allowed-headers: "*"
-      exposed-headers: "*"
+# 跨域配置
+latte-starter.web.cors:
+  enabled: true
+  allowed-origins: "*"
+  allowed-methods: "*"
+  allowed-headers: "*"
+  exposed-headers: "*"
+
+# 接口文档配置
+springdoc:
+  swagger-ui:
+    enabled: true
