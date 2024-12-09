@@ -8,36 +8,6 @@ project:
   contact:
     name: ppxb
 
-# Spring 配置
-spring:
-  application:
-    name: ${project.app-name}
-  profiles:
-    active: dev
-
-# 服务器配置
-server:
-  servlet:
-    context-path: /
-  undertow:
-    max-http-post-size: -1
-    buffer-size: 512
-    direct-buffers: true
-    threads:
-      io: 8
-      worker: 256
-
-# 接口文档配置
-springdoc:
-  default-flat-param-object: true
-# 接口文档增强配置
-knife4j:
-  enable: true
-  setting:
-    enable-footer: false
-    enable-footer-custom: true
-    footer-custom-content: 'Copyright © 2024 ${project.contact.name}&nbsp;⋅&nbsp;${project.name} v${project.version}'
-
 # 日志配置
 latte-starter.log:
   includes:
@@ -53,13 +23,44 @@ latte-starter.log:
 logging:
   config: classpath:logback-spring.xml
 
-latte-starter:
-  web:
-    response:
-      i18n: false
-      default-http-status-code-on-error: 200
-      default-success-code: 0
-      default-success-msg: ok
-      default-error-code: -1
-      default-error-msg: error
-      origin-exception-using-detail-message: false
+# 全局响应配置
+latte-starter.web:
+  response:
+    i18n: false
+    default-http-status-code-on-error: 200
+    default-success-code: 0
+    default-success-msg: ok
+    default-error-code: -1
+    default-error-msg: error
+    origin-exception-using-detail-message: false
+
+# 接口文档配置
+springdoc:
+  default-flat-param-object: true
+# 接口文档增强配置
+knife4j:
+  enable: true
+  setting:
+    enable-footer: false
+    enable-footer-custom: true
+    footer-custom-content: 'Copyright © 2024 ${project.contact.name}&nbsp;⋅&nbsp;${project.name} v${project.version}'
+
+# 服务器配置
+server:
+  servlet:
+    context-path: /
+  undertow:
+    max-http-post-size: -1
+    buffer-size: 512
+    direct-buffers: true
+    threads:
+      io: 8
+      worker: 256
+
+# Spring 配置
+spring:
+  application:
+    name: ${project.app-name}
+  profiles:
+    active: dev
+
