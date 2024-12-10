@@ -23,8 +23,17 @@ latte-starter.log:
 logging:
   config: classpath:logback-spring.xml
 
-# 全局响应配置
+# Web 配置
 latte-starter.web:
+  # 链路跟踪配置
+  trace:
+    enabled: true
+    tlog:
+      enable-invoke-time-print: false
+      pattern: '[$spanId][$traceId]'
+      mdc-enable: false
+    trace-id-name: traceId
+  # 全局响应配置
   response:
     i18n: false
     default-http-status-code-on-error: 200
