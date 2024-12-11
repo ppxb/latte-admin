@@ -21,19 +21,44 @@
             <artifactId>cosid-spring-redis</artifactId>
         </dependency>
 
+        <!-- SMS4J -->
         <dependency>
             <groupId>org.dromara.sms4j</groupId>
             <artifactId>sms4j-spring-boot-starter</artifactId>
         </dependency>
 
-        <!-- MySQL Java Driver -->
+        <!-- X File Storage -->
+        <dependency>
+            <groupId>org.dromara.x-file-storage</groupId>
+            <artifactId>x-file-storage-spring</artifactId>
+        </dependency>
+
+        <!-- Amazon S3 -->
+        <dependency>
+            <groupId>com.amazonaws</groupId>
+            <artifactId>aws-java-sdk-s3</artifactId>
+        </dependency>
+
+        <!-- FreeMarker -->
+        <dependency>
+            <groupId>org.freemarker</groupId>
+            <artifactId>freemarker</artifactId>
+        </dependency>
+
+        <!-- MySQL 驱动 -->
         <dependency>
             <groupId>com.mysql</groupId>
             <artifactId>mysql-connector-j</artifactId>
         </dependency>
 
         <!-- Latte Starter -->
-        <!-- Auth Module - SaToken -->
+        <!-- 扩展模块 - CRUD - Mybatis Plus-->
+        <dependency>
+            <groupId>com.ppxb</groupId>
+            <artifactId>latte-starter-extension-crud-mp</artifactId>
+        </dependency>
+
+        <!-- 认证模块 - SaToken -->
         <dependency>
             <groupId>com.ppxb</groupId>
             <artifactId>latte-starter-auth-satoken</artifactId>
@@ -45,49 +70,79 @@
             </exclusions>
         </dependency>
 
-        <!-- Auth Module - Just Auth -->
+        <!-- 认证模块 - Just Auth -->
         <dependency>
             <groupId>com.ppxb</groupId>
             <artifactId>latte-starter-auth-justauth</artifactId>
         </dependency>
 
-        <!-- Cache Module - JetCache -->
+        <!-- 缓存模块 - JetCache -->
         <dependency>
             <groupId>com.ppxb</groupId>
             <artifactId>latte-starter-cache-jetcache</artifactId>
         </dependency>
 
-        <!-- Extension - Data Permission - MyBatis Plus -->
+        <!-- 扩展模块 - 数据权限模块 - MyBatis Plus -->
         <dependency>
             <groupId>com.ppxb</groupId>
             <artifactId>latte-starter-extension-datapermission-mp</artifactId>
         </dependency>
 
-        <!-- JSON Module - Limiter -->
+        <!-- 消息模块 - WebSocket -->
+        <dependency>
+            <groupId>com.ppxb</groupId>
+            <artifactId>latte-starter-messaging-websocket</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-web</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <!-- 消息模块 - 邮件 -->
+        <dependency>
+            <groupId>com.ppxb</groupId>
+            <artifactId>latte-starter-messaging-mail</artifactId>
+        </dependency>
+
+        <!-- 验证码模块 - 图形验证码 -->
+        <dependency>
+            <groupId>com.ppxb</groupId>
+            <artifactId>latte-starter-captcha-graphic</artifactId>
+        </dependency>
+
+        <!-- 验证码模块 - 行为验证码 -->
+        <dependency>
+            <groupId>com.ppxb</groupId>
+            <artifactId>latte-starter-captcha-behavior</artifactId>
+        </dependency>
+
+        <!-- 安全模块 - 限流模块 -->
         <dependency>
             <groupId>com.ppxb</groupId>
             <artifactId>latte-starter-security-limiter</artifactId>
         </dependency>
 
-        <!-- JSON Module - Crypto -->
+        <!-- 安全模块 - 加解密模块 -->
         <dependency>
             <groupId>com.ppxb</groupId>
             <artifactId>latte-starter-security-crypto</artifactId>
         </dependency>
 
-        <!-- JSON Module - Mask -->
+        <!-- 安全模块 - 脱敏模块 -->
         <dependency>
             <groupId>com.ppxb</groupId>
             <artifactId>latte-starter-security-mask</artifactId>
         </dependency>
 
-        <!-- JSON Module - Password Encryptor -->
+        <!-- 安全模块 - 密码编码模块 -->
         <dependency>
             <groupId>com.ppxb</groupId>
             <artifactId>latte-starter-security-password</artifactId>
         </dependency>
 
-        <!-- JSON Module - Jackson -->
+        <!-- JSON 模块 - Jackson -->
         <dependency>
             <groupId>com.ppxb</groupId>
             <artifactId>latte-starter-json-jackson</artifactId>

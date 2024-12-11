@@ -7,6 +7,8 @@ project:
   base-package: com.ppxb.latte.admin
   contact:
     name: ppxb
+  license:
+    name: MIT
 
 # 日志配置
 latte-starter.log:
@@ -20,6 +22,7 @@ latte-starter.log:
     - OS
     - RESPONSE_HEADERS
     - RESPONSE_BODY
+# 项目日志配置
 logging:
   config: classpath:logback-spring.xml
 
@@ -28,11 +31,11 @@ latte-starter.web:
   # 链路跟踪配置
   trace:
     enabled: true
+    trace-id-name: traceId
     tlog:
       enable-invoke-time-print: false
       pattern: '[$spanId][$traceId]'
       mdc-enable: false
-    trace-id-name: traceId
   # 全局响应配置
   response:
     i18n: false
@@ -45,31 +48,74 @@ latte-starter.web:
 
 # 接口文档配置
 springdoc:
+  # 设置对象型参数的展示形式（设为 true 表示将对象型参数平展开，即对象内的属性直接作为参数展示而不是嵌套在对象内，默认 false）
+  # 如果不添加该全局配置，可以在需要如此处理的对象参数类上使用 @ParameterObject
   default-flat-param-object: true
 # 接口文档增强配置
 knife4j:
   enable: true
   setting:
+    # 是否显示默认的 footer（默认 true，显示）
     enable-footer: false
+    # 是否自定义 footer（默认 false，非自定义）
     enable-footer-custom: true
+    # 自定义 footer 内容，支持 Markdown 语法
     footer-custom-content: 'Copyright © 2024 ${project.contact.name}&nbsp;⋅&nbsp;${project.name} v${project.version}'
 
 # 服务器配置
 server:
   servlet:
+    # 应用访问路径
     context-path: /
+  # Undertow 服务器配置
   undertow:
+    # HTTP POST 请求内容的大小上限（默认 -1，不限制）
     max-http-post-size: -1
+    # 影响 buffer 的配置，这些 buffer 会用于服务器的 IO 操作，类似 Netty 池化
+    # 每块 buffer 的空间大小（越小的空间被利用越充分，不要设置太大，以免影响其他应用，合适即可）
     buffer-size: 512
+    # 是否分配的直接内存（NIO 直接分配的堆外内存）
     direct-buffers: true
     threads:
+      # IO 线程数，主要执行非阻塞的任务，它们会负责多个连接（默认每个 CPU 一个线程）
       io: 8
+      # 阻塞任务线程池，当执行类似 Servlet 请求阻塞操作时，Undertow 会从该线程池中取得线程（值设置取决于系统负载）
       worker: 256
 
 # Spring 配置
 spring:
   application:
     name: ${project.app-name}
+  main:
+    # 允许定义重名的 bean 对象覆盖原有的 bean
+    allow-bean-definition-overriding: true
+    # 允许循环依赖
+    allow-circular-references: true
+  # 环境配置
   profiles:
     active: dev
+  # 线程池配置（默认启用扩展配置，如未指定 corePoolSize、maxPoolSize 则根据机器配置自动设置）
+  task:
+    # 异步任务
+    execution:
+      thread-name-prefix: task-pool
+      # 任务拒绝策略（默认 ABORT，详情参考 latte-starter-core/threadpool）
+      rejected-policy: caller_runs
+      pool:
+        keep-alive: 300s
+      shutdown:
+        # 是否等待任务执行完成再关闭线程池
+        await-termination: true
+        # 等待时间
+        await-termination-period: 30s
+    # 定时任务
+    scheduling:
+      thread-name-prefix: schedule-pool
+      rejected-policy: caller_runs
+      shutdown:
+        # 是否等待任务执行完成再关闭线程池
+        await-termination: true
+        # 等待时间
+        await-termination-period: 30s
+
 

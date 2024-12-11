@@ -2,12 +2,52 @@
 server:
   port: 9527
 
+# 数据源配置
 spring.datasource:
-  type:
+  type: com.zaxxer.hikari.HikariDataSource
+  url: jdbc:p6spy:mysql://${DB_HOST:127.0.0.1}:${DB_PORT:3306}/${DB_NAME:latte_admin}?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8&useSSL=false&allowMultiQueries=true&rewriteBatchedStatements=true&autoReconnect=true&maxReconnects=10&failOverReadOnly=false
+  username: ${DB_USER:root}
+  password: ${DB_PWD:123456}
+  driver-class-name: com.p6spy.engine.spy.P6SpyDriver
+  # Hikari 连接池配置（完整配置请参阅：https://github.com/brettwooldridge/HikariCP）
+  hikari:
+    # 最大连接数量（默认 10，根据实际环境调整）
+    # 注意：当连接达到上限，并且没有空闲连接可用时，获取连接将在超时前阻塞最多 connectionTimeout 毫秒
+    maximum-pool-size: 20
+    # 获取连接超时时间（默认 30000 毫秒，30 秒）
+    connection-timeout: 30000
+    # 空闲连接最大存活时间（默认 600000 毫秒，10 分钟）
+    idle-timeout: 600000
+    # 保持连接活动的频率，以防止它被数据库或网络基础设施超时。该值必须小于 maxLifetime（默认 0，禁用）
+    keepalive-time: 30000
+    # 连接最大生存时间（默认 1800000 毫秒，30 分钟）
+    max-lifetime: 1800000
+
+# 缓存配置
+spring.data:
+  redis:
+    host: ${REDIS_HOST:127.0.0.1}
+    port: ${REDIS_PORT:6379}
+    # 密码（未设置密码时需注释掉）
+    password: ${REDIS_PWD:123456}
+    database: ${REDIS_DB:10}
+    # 连接超时时间
+    timeout: 10s
+    # 是否开启 SSL
+    ssl:
+      enabled: false
+  # Redisson 配置
+  redisson:
+    enabled: true
+    mode: single
+
+
 
 # 日志配置
 latte-starter.log:
+  # 是否打印日志，开启后可打印访问日志
   is-print: true
+# 项目日志配置（配置重叠部分，优先级高于 logback-spring.xml 中的配置）
 logging:
   level:
     com.ppxb.latte.admin: debug
@@ -18,9 +58,13 @@ logging:
 # 跨域配置
 latte-starter.web.cors:
   enabled: true
+  # 配置允许跨域的域名
   allowed-origins: "*"
+  # 配置允许跨域的请求方式
   allowed-methods: "*"
+  # 配置允许跨域的请求头
   allowed-headers: "*"
+  # 配置允许跨域的响应头
   exposed-headers: "*"
 
 # 接口文档配置
