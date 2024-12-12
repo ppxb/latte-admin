@@ -11,7 +11,7 @@
     <description>API 打包和部署模块</description>
 
     <properties>
-        <main-class>com.ppxb.latte.admin.api.LatteAdminBootstrap</main-class>
+        <main-class>com.ppxb.latte.admin.LatteAdminBootstrap</main-class>
         <bin-path>bin/</bin-path>
         <config-path>config/</config-path>
         <lib-path>lib/</lib-path>

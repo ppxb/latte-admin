@@ -45,7 +45,7 @@
             <artifactId>freemarker</artifactId>
         </dependency>
 
-        <!-- MySQL 驱动 -->
+        <!-- MySQL Java 驱动 -->
         <dependency>
             <groupId>com.mysql</groupId>
             <artifactId>mysql-connector-j</artifactId>

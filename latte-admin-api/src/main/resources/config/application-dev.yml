@@ -41,7 +41,41 @@ spring.data:
     enabled: true
     mode: single
 
-
+# 验证码配置
+latte-starter.captcha:
+  behavior:
+    enabled: true
+    cache-type: redis
+    water-mark:
+    # 一分钟内接口请求次数限制开关（默认：0，关闭，开启后下方失败锁定配置才会生效）
+    req-frequency-limit-enable: 0
+    # 一分钟内验证码最多失败次数限制（默认：5次）
+    req-get-lock-limit: 5
+    # 一分钟内验证码最多失败次数限制达标后锁定时间（默认：300秒）
+    req-get-lock-seconds: 300
+  # 图形验证码
+  graphic:
+    type: spec
+    length: 4
+    expirationInMinutes: 2
+# 其他验证码配置
+captcha:
+  # 邮箱验证码配置
+  mail:
+    # 内容长度
+    length: 6
+    # 过期时间
+    expiration-in-minutes: 5
+    # 模板路径
+    template-path: mail/captcha.ftl
+  # 短信验证码配置
+  sms:
+    # 内容长度
+    length: 4
+    # 过期时间
+    expiration-in-minutes: 5
+    # 模板 ID
+    template-id: 1
 
 # 日志配置
 latte-starter.log:
@@ -71,3 +105,15 @@ latte-starter.web.cors:
 springdoc:
   swagger-ui:
     enabled: true
+
+# WebSocket 配置
+latte-starter.messaging.websocket:
+  enabled: true
+  path: /websocket
+  allowed-origins: "*"
+
+# 短信配置
+sms:
+  config-type: yaml
+  http-log: true
+  is-print: false

@@ -23,18 +23,21 @@
  */
 
 
-package com.ppxb.latte.admin.api;
+package com.ppxb.latte.admin;
 
 import cn.hutool.core.net.NetUtil;
 import cn.hutool.core.util.URLUtil;
 import cn.hutool.extra.spring.SpringUtil;
+import com.alicp.jetcache.anno.config.EnableMethodCache;
 import com.github.xiaoymin.knife4j.spring.configuration.Knife4jProperties;
 import com.ppxb.latte.starter.core.autoconfigure.project.ProjectProperties;
+import com.ppxb.latte.starter.extension.crud.annotation.EnableCrudRestController;
 import com.ppxb.latte.starter.web.annotation.EnableGlobalResponse;
 import com.ppxb.latte.starter.web.model.R;
 import io.swagger.v3.oas.annotations.Hidden;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.dromara.x.file.storage.spring.EnableFileStorage;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
@@ -44,10 +47,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
+@EnableFileStorage
+@EnableMethodCache(basePackages = "com.ppxb.latte.admin")
 @EnableGlobalResponse
+@EnableCrudRestController
 @SpringBootApplication
-@RestController
 @RequiredArgsConstructor
+@RestController
 public class LatteAdminBootstrap implements ApplicationRunner {
 
     private final ProjectProperties projectProperties;
