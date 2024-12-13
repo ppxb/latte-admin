@@ -22,5 +22,5 @@ public class UserResp extends BaseDetailResp {
     @Serial
     private static final long serialVersionUID = 1L;
 
-    
+    // TODO: CONTINUE USER MODULE
 }
