@@ -28,6 +28,21 @@
 
     <dependencyManagement>
         <dependencies>
+            <!-- API 模块 -->
+            <dependency>
+                <groupId>com.ppxb</groupId>
+                <artifactId>latte-admin-api</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+            <!-- 系统管理模块 -->
+            <dependency>
+                <groupId>com.ppxb</groupId>
+                <artifactId>latte-admin-system</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+            <!-- 公共模块 -->
             <dependency>
                 <groupId>com.ppxb</groupId>
                 <artifactId>latte-admin-common</artifactId>

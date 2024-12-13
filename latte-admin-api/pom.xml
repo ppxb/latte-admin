@@ -18,6 +18,7 @@
     </properties>
 
     <dependencies>
+        <!-- Latte Starter 日志模块 - 拦截器版（Spring Boot Actuator HttpTrace 增强版） -->
         <dependency>
             <groupId>com.ppxb</groupId>
             <artifactId>latte-starter-log-interceptor</artifactId>
@@ -25,7 +26,13 @@
 
         <dependency>
             <groupId>com.ppxb</groupId>
-            <artifactId>latte-admin-common</artifactId>
+            <artifactId>latte-admin-system</artifactId>
+        </dependency>
+
+        <!-- Liquibase -->
+        <dependency>
+            <groupId>org.liquibase</groupId>
+            <artifactId>liquibase-core</artifactId>
         </dependency>
     </dependencies>
 

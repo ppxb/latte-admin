@@ -22,6 +22,10 @@ spring.datasource:
     keepalive-time: 30000
     # 连接最大生存时间（默认 1800000 毫秒，30 分钟）
     max-lifetime: 1800000
+# Liquibase 配置
+spring.liquibase:
+  enabled: true
+  change-log: classpath:/db/changelog/db.changelog-master.yaml
 
 # 缓存配置
 spring.data:
@@ -40,6 +44,37 @@ spring.data:
   redisson:
     enabled: true
     mode: single
+# JetCache 配置
+jetcache:
+  # 统计间隔（默认 0，表示不统计）
+  statIntervalMinutes: 15
+  # 本地/进程级/一级缓存配置
+  local:
+    default:
+      # 缓存类型
+      type: caffeine
+      # key 转换器的全局配置
+      keyConvertor: jackson
+      # 以毫秒为单位指定超时时间的全局配置
+      expireAfterWriteInMillis: 7200000
+      # 每个缓存实例的最大元素的全局配置，仅 local 类型的缓存需要指定
+      limit: 1000
+  # 远程/分布式/二级缓存配置
+  remote:
+    default:
+      # 缓存类型
+      type: redisson
+      # key 转换器的全局配置（用于将复杂的 KEY 类型转换为缓存实现可以接受的类型）
+      keyConvertor: jackson
+      # 以毫秒为单位指定超时时间的全局配置
+      expireAfterWriteInMillis: 7200000
+      # 2.7+ 支持两级缓存更新以后失效其他 JVM 中的 local cache，但多个服务共用 Redis 同一个 channel 可能会造成广播风暴，需要在这里指定channel。
+      # 你可以决定多个不同的服务是否共用同一个 channel，如果没有指定则不开启。
+      broadcastChannel: ${spring.application.name}
+      # 序列化器的全局配置，仅 remote 类型的缓存需要指定
+      valueEncoder: java
+      valueDecoder: java
+
 
 # 验证码配置
 latte-starter.captcha:
@@ -117,3 +152,53 @@ sms:
   config-type: yaml
   http-log: true
   is-print: false
+
+# Sa-Token 扩展配置
+sa-token.extension:
+  # 安全配置：排除（放行）路径配置
+  security.excludes:
+    - /error
+    # 静态资源
+    - /*.html
+    - /*/*.html
+    - /*/*.css
+    - /*/*.js
+    - /websocket/**
+    # 接口文档相关资源
+    - /favicon.ico
+    - /doc.html
+    - /webjars/**
+    - /swagger-ui/**
+    - /swagger-resources/**
+    - /*/api-docs/**
+    # 本地文件存储
+    - /file/**
+
+# 安全配置
+latte-starter.security:
+  ## 字段加解密配置
+  crypto:
+    enabled: true
+    # 对称加密算法密钥
+    password: abcdefghijklmnop
+    # 非对称加密算法密钥（在线生成 RSA 密钥对：http://web.chacuo.net/netrsakeypair）
+    public-key: MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAuz55XPR8a96mb+WRfTPzbK9jgXKkkgr/giZXGDymYuZuikb4I9hP2RER3zKOULvy6a2+TXlJNYiCZXhtnKBse5Qarv7MEW1KhvuFRnb/SFDbjd5c+LGSO5+Fzgiv3fQ60xDJdZVUlfJli63Gl/Ngk/ZzbUwVnSZaVS+QSkMQ9D6Tlq7RcBBAy3XqT2B1VQK1u8myK3t1rqvrnTqg4DJzKVmJsfYmmigMcXnFv4Ok37T2UalrOaXfRfDxlQ9G75vM0DMSlO6yCEk51DvmLFUffmI+Sz2POVbUurJeugmVbdchztIYjRkyFg46kXDxa8JujJU4P14lOsKg44xE6ZYmgQIDAQAB
+    private-key: MIIFDjBABgkqhkiG9w0BBQ0wMzAbBgkqhkiG9w0BBQwwDgQIf7J6bPiWm5ICAggAMBQGCCqGSIb3DQMHBAiHlC+RW44i+QSCBMh+ylej9qDNMEZ5UGDT8JDPqJ7bt2LjrS09FMh0wypG1e9+00wV1l2QjKzi/5cjRGque5nUocJ6RdIoHys0gilFtGduLHythO0C6eeR2vvEHdmwHpV7km/P6al8tRCtxeAIIzLoiwUxz9K+jT0DTpTIroey4Ud80vPEQsWd83FxIGQhtVnbiIKZnVmz4GQEzOGe4IbN80soq1Kmq7TNScC5E1399cGA+vXMbcoeXBvf93wL1vJ2OuTbiDgMW2i1uIrMdt/Sc9iCuqvgL+DbMrNDhQ4TUvdbTkIiuK7C5g6g4CrKif+Iu7pGEvzkz4hB79yZGh+pASFNQ7WRQvIH72UHFxH8DjkmAAgfzYRmaj+8MtjmQhQBDUApysB0+QiWa/iqZroxrlCsRTVE4GV+IkleGVwgwrXuZUGThOZ+p9qVTBizbIBh3MfqKt6fNczxtngV03dYqx78JGBIMAddyt1lRPS4uSH+SH7UxdFk7QwCnYTeyudjMheYw9Tej0MhxYhHNlqAFjYIOeH1FPIfFFIYGsUBVUJSprsY/OEXQJIbncCvI35OeWpXSvF9MLYBmgY4JhSpijWyQ+SB7/FysrovK/u7IwDbrghh84TEu6FvQ0JuJnKDhbNEmyf6t1gRD7oGc8GykM3Pl7b9WxAI+oqx/DiuapEc6XLXNLRwZytS57P0eXaLryQWW8cFbz9yeMNlbdDHK9HG+ej2dKpBfp6DcTrtZHb0oBxwlIqI+MzNGL0+oF8UTT9sycko4L1KC7/MmK5lIk0fNATeN7kUbt4JyYHLMyn95rIXQorEAhjvdznu/qpSXVKLL3fhotuGnCIXkXFnLcucGyMg1FcAc9kCF2lPYHHidkIphaQd3imM4kOb5JJjo011e9p+r3ZDj3O9fRBNSNinxDF+tqcp+alO/B9lbgLe1kauPO0hrO4DgEqnXFO1iffh0hYEeyPJGuZqqAHCcbcJjPhzCT3khL0Uek6eHiWG/18qzTWiWxJOVAIcHW9K2JgEgGW/NsCK9ASNTQxnLEHqGyAJjT+uXa7nMDh+R83lZrdWnpaa5/Ab4VtYRCJJqnZE+8cOIaR5aRq04r3FHzHf4pGJogXNvr7X5kdZ9jm0FleUQE/hFc+/jQ2HQcARcQAGl+RRG17mDqN8q78UzcDiJrtCHSn3KHAxwd3aFSNGdZO7TpFRtG+noBXeEXckGKoSCE38PKabeOdVVnn7oO8Sl+z6iM3YIzyD3YGRtf9IneBk6jhChIW64y/IhcwjUSLWwZlb1S40cPbhOLdJhb6VOfvzwxP4OCGVDXTsyahcmxNRuFKWauBvtMJUiVJ8mrRLXQZPvbbk8RQvgs5TrI43maLsTQUKr8ZKvdTUhKrierGqrVNfEFDTa7kybAW9Y7kNeoRobGmWdOfGuYS7KDlVjpqi+2ZX/FvYH1toQjvTv9mbA011ZD+5RgdJi+o9ka2Za2fAcL+2S2pTCudKBfdmS0joycU3gBhl5kVrSKM5a9N4RfK8LoylI+6DTMsnSMVMGrfRoUbd4qUXfVPntJ8OGmCmkIoJYo1ZZUlCfdhU+H+YoFJUlF+LHJhH1QFDYjq9DD5exvu6c5ntxjiWDfOyz3oF3P+aD49wim5Pl3Cjy18=
+  password:
+    enabled: true
+    encoding-id: bcrypt
+  limiter:
+    enabled: true
+    key-prefix: RateLimiter
+
+# 文件上传配置
+spring.servlet:
+  multipart:
+    enabled: true
+    # 单文件上传大小限制
+    max-file-size: 10MB
+    # 单次总上传文件大小限制
+    max-request-size: 20MB
+#头像支持格式配置
+avatar:
+  support-suffix: jpg,jpeg,png,gif
